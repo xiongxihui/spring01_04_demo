@@ -13,5 +13,8 @@ public class Test01 {
         IAccountService accountService = ac.getBean("accountService", IAccountService.class);
         //调用对象方法
         accountService.save(new Account(95279527,11,999.0,3.14));
+        
+        System.out.println("1111");
     }
 }
+
