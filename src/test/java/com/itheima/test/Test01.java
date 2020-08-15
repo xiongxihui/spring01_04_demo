@@ -15,6 +15,8 @@ public class Test01 {
         accountService.save(new Account(95279527,11,999.0,3.14));
         
         System.out.println("1111");
+
+        System.out.println("master");
     }
 }
 
