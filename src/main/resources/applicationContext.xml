@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--通过实现类创建一个IAccountDao对象-->
+    <bean id="accountDao" class="com.itheima.dao.impl.IAccountDaoImpl"></bean>
+
+    <!--创建IAccountService对象,并注入accountDao-->
+    <bean id="accountService" class="com.itheima.service.impl.IAccountServiceImpl">
+        <property name="accountDao" ref="accountDao"></property>
+        <!--这里的ref="accountDao"可以用value=#{account}替换,SpEL用法二:直接引用对象的值,或者对象的属性值-->
+    </bean>
+</beans>

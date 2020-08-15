@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--用法1：通过SpEL计算表达式的值-->
+    <bean id="account" class="com.itheima.entity.Account">
+        <property name="accountId" value="#{10*10}"></property>
+
+    <!--用法2：引用对象的值; #{obj.uid} 表示引用obj对象的uid属性值-->
+        <property name="uid" value="#{obj.uid}"></property>
+
+        <!--用法3：调用对象的方法
+        public class Account { private Double money; public Double getMoney() { return money; } }
+        调用getMoney()方法： <property name="money" value="#{obj.getMoney()}"/>
+        调用getMoney()方法后再运算，如转换为int类形
+        <property name="money" value="# {obj.getMoney().intValue()}"/>
+         但是，obj.getMoney()返回NULL，再调用NULL对象的方法报错。
+         所以：1. 下面的配置多了个?问号，表示obj.getMoney()返回null就不调用后面的 intValue()方法
+               2. ？ 相当于对左边的方法做了非空判断，如果为null就不调用右边方法 -->
+        <property name="money" value="#{obj.getMoney()?.intValue()}"></property>
+
+        <!--用法4：调用静态方法或静态成员变量 public class Account { private Double pi; // 添加字段及get,set方法 } -->
+        <property name="pi" value="#{T(java.lang.Math).PI}"></property>
+    </bean>
+
+
+
+
+    <!--创建obj对象,并对uid属性赋值-->
+    <bean id="obj" class="com.itheima.entity.Account">
+        <property name="uid" value="11"></property>
+    </bean>
+</beans>
